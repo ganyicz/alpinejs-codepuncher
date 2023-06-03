@@ -1,17 +1,18 @@
-# Alpine.js Code Puncher
-### Headless component for PIN codes, two-factor and more
-
-Ever noticed the smooth interaction with Stripe's two factor authentication? As the adoption of two-factor authentication continues to rise a seamless user experience becomes crucial, especially when entering a code becomes a part of users' daily routine. Give your users what they deserve!
-
-* Copy & paste component
-* Completely unstyled
-* Less than 40 lines of code
-* Supports any number of inputs
-* Handles focusing on the next input
-* Handles clearing when focusing previous inputs
-* Provides an easy way to capture the final code
-
 <img width="1436" alt="Example" src="https://github.com/ganyicz/alpinejs-codepuncher/assets/3823354/5d73eb3d-45fb-4249-83de-7c2baca276eb">
+
+# Headless component for 2FA, PIN codes and more
+Ever noticed the smooth interaction with Stripe's two factor authentication?
+
+Entering a verification code is becoming a part of our users' daily routine. Make it a delightful experience.
+
+* Copy & Paste
+* Completely unstyled
+* Keyboard and mobile accessible
+* Handles focusing next input
+* Handles clearing inputs
+* Supports any number of digits
+* Less than 40 lines of code
+
 
 ## Usage
 
@@ -29,7 +30,7 @@ Ever noticed the smooth interaction with Stripe's two factor authentication? As 
 
 To capture the final code, we're using `x-effect` ([docs](https://alpinejs.dev/directives/effect)) to check whether the code has been fully entered according to the value of `filled`.
 
-## Copy the code
+## Component code
 
 ```javascript
 Alpine.data('codePuncher', () => ({
