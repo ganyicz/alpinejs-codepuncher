@@ -14,6 +14,8 @@ Make it a delightful experience. Forget boring inputs, give your users what they
 * Zero markdown (only x- bindings)
 * Less than 40 lines of code
 
+[Click here for example](https://ganyicz.github.io/alpinejs-codepuncher/example.html)
+
 ## Usage
 
 1. Copy the code from section below
