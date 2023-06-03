@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Puncher Example</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/mask@3.x.x/dist/cdn.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body class="h-screen flex items-center justify-center bg-slate-100">
+    <div class="p-14 bg-white rounded-lg shadow">
+        <h5 class="mb-4 text-2xl font-semibold text-slate-900">Two-step authentication<h5>
+        <p class="mb-4 max-w-xs text-sm text-slate-700">To continue, please enter the 6 digit code sent to your phone ending in 9876.</p>
+        <p class="text-sm text-slate-700">Didn't receive a code? <a href="#" class="text-slate-900 font-semibold hover:underline">Resend</a></p>
+
+        <div x-data="codePuncher" class="mt-12 flex items-center gap-x-2">
+            <input x-bind="digit" class="w-12 py-2.5 border rounded-md text-3xl text-center text-slate-900" autofocus>
+            <input x-bind="digit" class="w-12 py-2.5 border rounded-md text-3xl text-center text-slate-900">
+            <input x-bind="digit" class="w-12 py-2.5 border rounded-md text-3xl text-center text-slate-900">
+            <div class="text-3xl font-light text-slate-600">-</div>
+            <input x-bind="digit" class="w-12 py-2.5 border rounded-md text-3xl text-center text-slate-900">
+            <input x-bind="digit" class="w-12 py-2.5 border rounded-md text-3xl text-center text-slate-900">
+            <input x-bind="digit" class="w-12 py-2.5 border rounded-md text-3xl text-center text-slate-900">
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('alpine:init', function () {
+            Alpine.data('codePuncher', () => ({
+                digits: [],
+                inputs: [],
+                init() {
+                    this.inputs = Array.from(this.$root.querySelectorAll('[x-bind="digit"]'));
+                    this.digits = Array(this.inputs.length).fill(null)
+
+                    this.$nextTick(() => this.inputs[0].focus())
+                },
+                get filled() {
+                    return this.digits.join("").length === this.digits.length
+                },
+                clearCodeFrom(index) {
+                    this.digits = this.digits.map((value, i) => i >= index ? null : value)
+                },
+                focusPreviousInput(index) {
+                    this.$nextTick(() => this.inputs[index - 1].focus())
+                },
+                focusNextInput(index) {
+                    this.$nextTick(() => this.$el.value && this.inputs[index + 1].focus())
+                },
+                digit (index) {
+                    return {
+                        'x-data': `{
+                            index: inputs.indexOf($el),
+                            get first() { return this.index === 0 },
+                            get last() { return this.index === this.digits.length - 1 },
+                        }`,
+                        'x-mask': '9',
+                        'x-model': 'digits[index]',
+                        'x-bind:disabled': 'index > digits.join("").length',
+                        'x-bind:tabindex': 'index < digits.join("").length ? -1 : 0',
+                        'x-on:focus': '!last && clearCodeFrom(index)',
+                        'x-on:input': '!last && focusNextInput(index)',
+                        'x-on:keydown.left': '!first && focusPreviousInput(index)',
+                        'x-on:keydown.backspace': '!first && (last && $el.value ? $el.value = null : focusPreviousInput(index))',
+                        'inputmode': 'numeric',
+                    }
+                }
+            }))
+        })
+    </script>
+</body>
+</html>
