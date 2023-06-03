@@ -27,7 +27,7 @@ Ever noticed the smooth interaction with Stripe's two factor authentication? As 
 </div>
 ```
 
-To capture the final code, we're using `x-effect` ([docs](https://alpinejs.dev/directives/effect)) to check whether `filled` is set to true.
+To capture the final code, we're using `x-effect` ([docs](https://alpinejs.dev/directives/effect)) to check whether the code has been fully entered according to the value of `filled`.
 
 ## Copy the code
 
