@@ -14,10 +14,9 @@ Make it a delightful experience. Forget boring inputs, give your users what they
 * Zero markdown (only x- bindings)
 * Less than 40 lines of code
 
-
 ## Usage
 
-1. Copy the code from below section
+1. Copy the code from section below
 2. Register the component ([docs](https://alpinejs.dev/globals/alpine-data))
 3. Render the component like so:
 
