@@ -1,17 +1,17 @@
 <img width="1436" alt="Example" src="https://github.com/ganyicz/alpinejs-codepuncher/assets/3823354/5d73eb3d-45fb-4249-83de-7c2baca276eb">
 
-# Headless component for 2FA / PIN 
+# Headless component for 2FA & PIN codes 
 Ever noticed the smooth interaction with Stripe's two factor authentication?
 
 Entering a verification code is becoming a part of our users' daily routine.
 
 Make it a delightful experience. Forget boring inputs, give your users what they deserve!
 
-* Copy & Paste into your app
+* Next input autofocus
+* Input validation
+* Keyboard and mobile accessiblity
 * Completely unstyled
-* Handles focusing of next input
-* Keyboard and mobile accessible
-* Supports any number of digits
+* Zero markdown (only x- bindings)
 * Less than 40 lines of code
 
 
