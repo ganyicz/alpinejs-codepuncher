@@ -16,7 +16,14 @@ Make it a delightful experience. Forget boring inputs, give your users what they
 
 [Click here for example](https://ganyicz.github.io/alpinejs-codepuncher/example.html)
 
+## Requirements
+
+* Alpine.js 3.x [https://alpinejs.dev/essentials/installation](https://alpinejs.dev/essentials/installation)
+* Alpine.js Mask Plugin [https://alpinejs.dev/plugins/mask](https://alpinejs.dev/plugins/mask)
+
 ## Usage
+
+Simply copy the following code to your project. 
 
 ```html
 <div x-data="{ code: null }">
