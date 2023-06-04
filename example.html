@@ -11,7 +11,7 @@
 </head>
 <body class="h-screen flex items-center justify-center bg-slate-100">
     <main x-data="{ code: null }">
-        <div class="mb-10 pl-8 pr-8">
+        <div class="mb-10 px-2 md:pl-8 md:pr-8">
             <p class="font-black text-slate-800 text-2xl">Alpine.js CodePuncher</p>
             <p class="mb-8 mt-2 text-sm text-slate-700">
                 <a class="underline" href="https://github.com/ganyicz/alpinejs-codepuncher">Visit github</a> or <a class="underline" href="https://github.com/ganyicz/alpinejs-codepuncher/blob/main/example.html">explore the source code</a>
@@ -19,20 +19,20 @@
             <div class="h-px w-full bg-slate-300"></div>
         </div>
 
-        <div class="px-14 pt-12 pb-14 bg-white rounded-lg shadow">
+        <div class="max-w-full px-8 md:px-14 pt-12 pb-14 bg-white shadow md:rounded-lg">
             <p class="mb-2 text-sm font-semibold text-slate-700">Example use</p>
             <h5 class="mb-4 text-2xl font-semibold text-slate-800">Two-step authentication<h5>
             <p class="mb-4 max-w-xs text-sm text-slate-700">To continue, please enter the 6 digit verification code sent to your phone ending in 9876.</p>
             <p class="text-sm text-slate-700">Didn't receive a code? <span class="text-slate-800 font-semibold">Resend</span></p>
 
             <div x-model="code" x-bind="codePuncher" class="mt-8 flex items-center gap-x-2">
-                <input x-bind="digit" class="w-12 py-2.5 border border-slate-300 rounded-md text-3xl text-center text-slate-700" autofocus>
-                <input x-bind="digit" class="w-12 py-2.5 border border-slate-300 rounded-md text-3xl text-center text-slate-700">
-                <input x-bind="digit" class="w-12 py-2.5 border border-slate-300 rounded-md text-3xl text-center text-slate-700">
+                <input x-bind="digit" class="w-8 py-1 border border-slate-300 rounded-md text-2xl md:text-3xl text-center text-slate-700 md:w-12 md:py-2.5" autofocus>
+                <input x-bind="digit" class="w-8 py-1 border border-slate-300 rounded-md text-2xl md:text-3xl text-center text-slate-700 md:w-12 md:py-2.5">
+                <input x-bind="digit" class="w-8 py-1 border border-slate-300 rounded-md text-2xl md:text-3xl text-center text-slate-700 md:w-12 md:py-2.5">
                 <div class="text-3xl text-slate-300 px-2">-</div>
-                <input x-bind="digit" class="w-12 py-2.5 border border-slate-300 rounded-md text-3xl text-center text-slate-700">
-                <input x-bind="digit" class="w-12 py-2.5 border border-slate-300 rounded-md text-3xl text-center text-slate-700">
-                <input x-bind="digit" class="w-12 py-2.5 border border-slate-300 rounded-md text-3xl text-center text-slate-700">
+                <input x-bind="digit" class="w-8 py-1 border border-slate-300 rounded-md text-2xl md:text-3xl text-center text-slate-700 md:w-12 md:py-2.5">
+                <input x-bind="digit" class="w-8 py-1 border border-slate-300 rounded-md text-2xl md:text-3xl text-center text-slate-700 md:w-12 md:py-2.5">
+                <input x-bind="digit" class="w-8 py-1 border border-slate-300 rounded-md text-2xl md:text-3xl text-center text-slate-700 md:w-12 md:py-2.5">
             </div>
         </div>
 
