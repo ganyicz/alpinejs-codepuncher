@@ -9,9 +9,9 @@
     <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/mask@3.x.x/dist/cdn.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
-<body class="h-screen flex items-center justify-center bg-slate-100">
-    <main x-data="{ code: null }">
-        <div class="mb-10 px-2 md:pl-8 md:pr-8">
+<body class="min-h-screen pt-10 flex items-center justify-center bg-slate-100">
+    <main x-data="{ code: null }" class="w-full md:w-auto">
+        <div class="mb-10 px-8">
             <p class="font-black text-slate-800 text-2xl">Alpine.js CodePuncher</p>
             <p class="mb-8 mt-2 text-sm text-slate-700">
                 <a class="underline" href="https://github.com/ganyicz/alpinejs-codepuncher">Visit github</a> or <a class="underline" href="https://github.com/ganyicz/alpinejs-codepuncher/blob/main/example.html">explore the source code</a>
@@ -19,7 +19,7 @@
             <div class="h-px w-full bg-slate-300"></div>
         </div>
 
-        <div class="max-w-full px-8 md:px-14 pt-12 pb-14 bg-white shadow md:rounded-lg">
+        <div class="px-8 md:px-14 pt-12 pb-14 bg-white shadow md:rounded-lg">
             <p class="mb-2 text-sm font-semibold text-slate-700">Example use</p>
             <h5 class="mb-4 text-2xl font-semibold text-slate-800">Two-step authentication<h5>
             <p class="mb-4 max-w-xs text-sm text-slate-700">To continue, please enter the 6 digit verification code sent to your phone ending in 9876.</p>
