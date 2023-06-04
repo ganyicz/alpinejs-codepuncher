@@ -23,7 +23,7 @@ Make it a delightful experience. Forget boring inputs, give your users what they
 
 ## Usage
 
-Simply copy the following code to your project. 
+Simply copy the following code to your project.
 
 ```html
 <div x-data="{ code: null }">
@@ -81,3 +81,7 @@ Simply copy the following code to your project.
     })
 </script>
 ```
+
+## Styling
+
+Since the component does not come with any styles, you will need to add yours. Feel free to alter the markdown in any way you need, just make sure the digits are inside the component. If you are looking for a stylized example [click here](https://ganyicz.github.io/alpinejs-codepuncher/example.html).
