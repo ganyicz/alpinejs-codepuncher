@@ -12,70 +12,65 @@ Make it a delightful experience. Forget boring inputs, give your users what they
 * Keyboard and mobile accessiblity
 * Completely unstyled
 * Zero markdown (only x- bindings)
-* Less than 40 lines of code
+* Copy & Paste into your project
 
 [Click here for example](https://ganyicz.github.io/alpinejs-codepuncher/example.html)
 
 ## Usage
 
-1. Copy the code from section below
-2. Register the component ([docs](https://alpinejs.dev/globals/alpine-data))
-3. Render the component like so:
-
 ```html
 <div x-data="{ code: null }">
-    <div x-model="code" x-bind="codePuncher">
-        <!-- for(1..6) -->
-            <input x-bind="digit" />
-        <!-- endfor -->
+    <div x-bind="codePuncher" x-model="code">
+        <input x-bind="digit" />
+        <input x-bind="digit" />
+        <input x-bind="digit" />
+        <input x-bind="digit" />
     </div>
 </div>
-```
 
-To capture the final code, we're using `x-effect` ([docs](https://alpinejs.dev/directives/effect)) to check whether the code has been fully entered according to the value of `filled`.
+<script>
+    document.addEventListener('alpine:init', () => {
+        Alpine.bind('codePuncher', () => ({
+            'x-modelable': 'glued',
+            'x-data': () => ({
+                digits: [],
+                inputs: [],
+                glued: '',
+                init() {
+                    this.inputs = Array.from(this.$root.querySelectorAll('[x-bind="digit"]'));
+                    this.digits = Array(this.inputs.length).fill(null)
 
-## Component code
-
-```javascript
-Alpine.bind('codePuncher', () => ({
-    'x-modelable': 'glued',
-    'x-data': () => ({
-        digits: [],
-        inputs: [],
-        glued: '',
-        init() {
-            this.inputs = Array.from(this.$root.querySelectorAll('[x-bind="digit"]'));
-            this.digits = Array(this.inputs.length).fill(null)
-
-            this.$watch('digits', (value) => this.glued = value.join(""))
-        },
-        clearCodeFrom(index) {
-            this.digits = this.digits.map((value, i) => i >= index ? null : value)
-        },
-        focusPreviousInput(index) {
-            this.$nextTick(() => this.inputs[index - 1].focus())
-        },
-        focusNextInput(index) {
-            this.$nextTick(() => this.$el.value && this.inputs[index + 1].focus())
-        },
-        digit (index) {
-            return {
-                'x-data': `{
-                    index: inputs.indexOf($el),
-                    get first() { return this.index === 0 },
-                    get last() { return this.index === this.digits.length - 1 },
-                }`,
-                'x-mask': '9',
-                'x-model': 'digits[index]',
-                'x-bind:disabled': 'index > digits.join("").length',
-                'x-bind:tabindex': 'index < digits.join("").length ? -1 : 0',
-                'x-on:focus': '!last && clearCodeFrom(index)',
-                'x-on:input': '!last && focusNextInput(index)',
-                'x-on:keydown.left': '!first && focusPreviousInput(index)',
-                'x-on:keydown.backspace': '!first && (last && $el.value ? $el.value = null : focusPreviousInput(index))',
-                'inputmode': 'numeric',
-            }
-        }
+                    this.$watch('digits', (value) => this.glued = value.join(""))
+                },
+                clearCodeFrom(index) {
+                    this.digits = this.digits.map((value, i) => i >= index ? null : value)
+                },
+                focusPreviousInput(index) {
+                    this.$nextTick(() => this.inputs[index - 1].focus())
+                },
+                focusNextInput(index) {
+                    this.$nextTick(() => this.$el.value && this.inputs[index + 1].focus())
+                },
+                digit (index) {
+                    return {
+                        'x-data': `{
+                            index: inputs.indexOf($el),
+                            get first() { return this.index === 0 },
+                            get last() { return this.index === this.digits.length - 1 },
+                        }`,
+                        'x-mask': '9',
+                        'x-model': 'digits[index]',
+                        'x-bind:disabled': 'index > digits.join("").length',
+                        'x-bind:tabindex': 'index < digits.join("").length ? -1 : 0',
+                        'x-on:focus': '!last && clearCodeFrom(index)',
+                        'x-on:input': '!last && focusNextInput(index)',
+                        'x-on:keydown.left': '!first && focusPreviousInput(index)',
+                        'x-on:keydown.backspace': '!first && (last && $el.value ? $el.value = null : focusPreviousInput(index))',
+                        'inputmode': 'numeric',
+                    }
+                }
+            })
+        }))
     })
-}))
+</script>
 ```
