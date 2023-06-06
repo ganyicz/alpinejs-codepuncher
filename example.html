@@ -62,6 +62,29 @@
                     focusNextInput(index) {
                         this.$nextTick(() => this.$el.value && this.inputs[index + 1].focus())
                     },
+                    handlePaste(index, event) {
+                        // Get user clipboard text
+                        const text = event.clipboardData.getData('Text')
+                        if (!text || !text.length) return
+
+                        // This remove whitespaces, then slices based on how many inputs remain
+                        const remainingInputs = this.inputs.length - index
+                        const value = String(text).replace(/\s/g, "").slice(0, remainingInputs).split('')
+
+                        // Figure out what inputs we need to update
+                        const inputsToUpdate = Array.from(Array(remainingInputs), (empty, numIndex) => {
+                            return numIndex + index
+                        }).splice(0, value.length)
+
+                        // Update the values
+                        inputsToUpdate.forEach((ref, i) => {
+                            this.inputs[ref].value = value[i]
+                            this.$nextTick(() => this.inputs[ref].dispatchEvent(new Event('input')))
+                        })
+
+                        // Focus the last input we updated
+                        this.focusNextInput(inputsToUpdate.pop() - 1)
+                    },
                     digit (index) {
                         return {
                             'x-data': `{
@@ -77,6 +100,7 @@
                             'x-on:input': '!last && focusNextInput(index)',
                             'x-on:keydown.left': '!first && focusPreviousInput(index)',
                             'x-on:keydown.backspace': '!first && (last && $el.value ? $el.value = null : focusPreviousInput(index))',
+                            'x-on:paste.prevent' : 'handlePaste(index, event)',
                             'inputmode': 'numeric',
                         }
                     }
