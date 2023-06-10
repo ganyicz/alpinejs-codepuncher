@@ -63,27 +63,13 @@
                         this.$nextTick(() => this.$el.value && this.inputs[index + 1].focus())
                     },
                     handlePaste(index, event) {
-                        // Get user clipboard text
-                        const text = event.clipboardData.getData('Text')
-                        if (!text || !text.length) return
+                        const pastedDigits = String(event.clipboardData.getData('text/plain')).match(/\d/g) ?? []
+                        const queuedDigits = pastedDigits.slice(0, this.digits.length - index)
+                        const focusedInputIndex = Math.min(index + queuedDigits.length, this.digits.length - 1)
 
-                        // This remove whitespaces, then slices based on how many inputs remain
-                        const remainingInputs = this.inputs.length - index
-                        const value = String(text).replace(/\s/g, "").slice(0, remainingInputs).split('')
+                        queuedDigits.forEach((value, i) => this.digits[index + i] = value)
 
-                        // Figure out what inputs we need to update
-                        const inputsToUpdate = Array.from(Array(remainingInputs), (empty, numIndex) => {
-                            return numIndex + index
-                        }).splice(0, value.length)
-
-                        // Update the values
-                        inputsToUpdate.forEach((ref, i) => {
-                            this.inputs[ref].value = value[i]
-                            this.$nextTick(() => this.inputs[ref].dispatchEvent(new Event('input')))
-                        })
-
-                        // Focus the last input we updated
-                        this.focusNextInput(inputsToUpdate.pop() - 1)
+                        this.$nextTick(() => this.inputs[focusedInputIndex].focus())
                     },
                     digit (index) {
                         return {
