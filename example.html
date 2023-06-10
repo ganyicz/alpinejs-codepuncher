@@ -40,13 +40,13 @@
     </main>
 
     <script>
-        document.addEventListener('alpine:init', function () {
+        document.addEventListener('alpine:init', () => {
             Alpine.bind('codePuncher', () => ({
                 'x-modelable': 'glued',
                 'x-data': () => ({
                     digits: [],
                     inputs: [],
-                    glued: null,
+                    glued: '',
                     init() {
                         this.inputs = Array.from(this.$root.querySelectorAll('[x-bind="digit"]'));
                         this.digits = Array(this.inputs.length).fill(null)
@@ -80,8 +80,8 @@
                             }`,
                             'x-mask': '9',
                             'x-model': 'digits[index]',
-                            'x-bind:disabled': 'index > digits.join("").length',
-                            'x-bind:tabindex': 'index < digits.join("").length ? -1 : 0',
+                            'x-bind:disabled': 'index > glued.length',
+                            'x-bind:tabindex': 'index < glued.length ? -1 : 0',
                             'x-on:focus': '!last && clearCodeFrom(index)',
                             'x-on:input': '!last && focusNextInput(index)',
                             'x-on:keydown.left': '!first && focusPreviousInput(index)',
