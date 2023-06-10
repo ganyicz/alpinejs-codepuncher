@@ -10,6 +10,7 @@ Make it a delightful experience. Forget boring inputs, give your users what they
 * Next input autofocus
 * Input validation
 * Keyboard and mobile accessiblity
+* Paste handling
 * Completely unstyled
 * Zero markdown (only x- bindings)
 * Copy & Paste into your project
@@ -58,6 +59,15 @@ Simply copy the following code to your project.
                 focusNextInput(index) {
                     this.$nextTick(() => this.$el.value && this.inputs[index + 1].focus())
                 },
+                handlePaste(index, event) {
+                    const pastedDigits = String(event.clipboardData.getData('text/plain')).match(/\d/g) ?? []
+                    const queuedDigits = pastedDigits.slice(0, this.digits.length - index)
+                    const focusedInputIndex = Math.min(index + queuedDigits.length, this.digits.length - 1)
+
+                    queuedDigits.forEach((value, i) => this.digits[index + i] = value)
+
+                    this.$nextTick(() => this.inputs[focusedInputIndex].focus())
+                },
                 digit (index) {
                     return {
                         'x-data': `{
@@ -73,6 +83,7 @@ Simply copy the following code to your project.
                         'x-on:input': '!last && focusNextInput(index)',
                         'x-on:keydown.left': '!first && focusPreviousInput(index)',
                         'x-on:keydown.backspace': '!first && (last && $el.value ? $el.value = null : focusPreviousInput(index))',
+                        'x-on:paste.prevent' : 'handlePaste(index, event)',
                         'inputmode': 'numeric',
                     }
                 }

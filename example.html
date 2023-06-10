@@ -40,13 +40,13 @@
     </main>
 
     <script>
-        document.addEventListener('alpine:init', function () {
+        document.addEventListener('alpine:init', () => {
             Alpine.bind('codePuncher', () => ({
                 'x-modelable': 'glued',
                 'x-data': () => ({
                     digits: [],
                     inputs: [],
-                    glued: null,
+                    glued: '',
                     init() {
                         this.inputs = Array.from(this.$root.querySelectorAll('[x-bind="digit"]'));
                         this.digits = Array(this.inputs.length).fill(null)
@@ -62,6 +62,15 @@
                     focusNextInput(index) {
                         this.$nextTick(() => this.$el.value && this.inputs[index + 1].focus())
                     },
+                    handlePaste(index, event) {
+                        const pastedDigits = String(event.clipboardData.getData('text/plain')).match(/\d/g) ?? []
+                        const queuedDigits = pastedDigits.slice(0, this.digits.length - index)
+                        const focusedInputIndex = Math.min(index + queuedDigits.length, this.digits.length - 1)
+
+                        queuedDigits.forEach((value, i) => this.digits[index + i] = value)
+
+                        this.$nextTick(() => this.inputs[focusedInputIndex].focus())
+                    },
                     digit (index) {
                         return {
                             'x-data': `{
@@ -71,12 +80,13 @@
                             }`,
                             'x-mask': '9',
                             'x-model': 'digits[index]',
-                            'x-bind:disabled': 'index > digits.join("").length',
-                            'x-bind:tabindex': 'index < digits.join("").length ? -1 : 0',
+                            'x-bind:disabled': 'index > glued.length',
+                            'x-bind:tabindex': 'index < glued.length ? -1 : 0',
                             'x-on:focus': '!last && clearCodeFrom(index)',
                             'x-on:input': '!last && focusNextInput(index)',
                             'x-on:keydown.left': '!first && focusPreviousInput(index)',
                             'x-on:keydown.backspace': '!first && (last && $el.value ? $el.value = null : focusPreviousInput(index))',
+                            'x-on:paste.prevent' : 'handlePaste(index, event)',
                             'inputmode': 'numeric',
                         }
                     }
